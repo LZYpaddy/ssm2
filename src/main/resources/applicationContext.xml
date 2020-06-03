@@ -32,13 +32,19 @@
     <!--配置SqlSessionFactory对象-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <!--    mybatis配置自动识别驼峰-->
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+            </bean>
+        </property>
     </bean>
+
 
     <!--    配置AccountDao所在包-->
     <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.zyg.dao"/>
     </bean>
-
 
 
     <!--    配置spring框架声明试事务管理器-->
@@ -58,4 +64,21 @@
     <aop:config>
         <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.zyg.service.impl.*ServiceImpl.*(..))"/>
     </aop:config>
+
+    <!-- 文件上传的配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 指定所上传文件的总大小不能超过10M。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="10240000"/>
+    </bean>
+
+    <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <!-- 遇到MaxUploadSizeExceededException异常时，自动跳转到WebContent目录下的error.jsp页面 -->
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error</prop>
+            </props>
+        </property>
+    </bean>
 </beans>
+
