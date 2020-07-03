@@ -1,6 +1,7 @@
 package com.zyg.controller;
 
 import com.zyg.core.AjaxResult;
+import com.zyg.domain.Course;
 import com.zyg.domain.Order;
 import com.zyg.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,14 @@ public class OrderController {
         } else {
             return warn("警告，影响行数不为0和1,可能多修改了几行", insertReply);
         }
+    }
+
+    @PostMapping("/findUserCourses")
+    public AjaxResult findUserCourses(int userId) {
+        System.out.println("表现层查询我的所买课程");
+        List<Course> list = iOrderService.findUserCourses(userId);
+        System.out.println(list);
+        return success("成功", list);
+
     }
 }

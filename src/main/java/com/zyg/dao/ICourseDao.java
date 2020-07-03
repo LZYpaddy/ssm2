@@ -58,4 +58,29 @@ public interface ICourseDao {
      */
     @Select("SELECT * FROM course WHERE type_name =(SELECT type_name FROM `course_type` WHERE type_id=(${typeName}))")
     List<Course> findCourseByType(@Param("typeName") String typeName);
+
+    /**
+     * 查询已发布的top课程
+     * @param topNumber
+     * @return
+     */
+    @Select("select * from course where delivery_status=1 ORDER BY hits DESC LIMIT 0, #{topNumber}")
+    List<Course> findTopCourse(int topNumber);
+
+
+    @Update("UPDATE course SET hits=(hits+1) where id=(${id})")
+    int upCourseHits(@Param("id") long id);
+
+    /**
+     * 查询本账号所有订单
+     * @return
+     * */
+    @Select("select * from `order` left join order_item on order.order_id=order_item.order_id where user_id=#{userId} and course_id=#{courseId}")
+    String fetchCourseByUidAndCid(@Param("userId") int userId,@Param("courseId") int courseId);
+    /**
+     * 根据类型（实际上是根据ID）查询课程(前台)
+     * @return
+     */
+    @Select("SELECT * FROM course WHERE type_name =(SELECT type_name FROM `course_type` WHERE type_id=(${typeName})) and delivery_status=1")
+    List<Course> findCourseByTypeAndDelivery(@Param("typeName") String typeName);
 }

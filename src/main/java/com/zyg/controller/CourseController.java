@@ -1,10 +1,11 @@
 package com.zyg.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zyg.core.AjaxResult;
 import com.zyg.domain.Course;
 import com.zyg.service.ICourseServise;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -175,7 +176,8 @@ public class CourseController {
     public AjaxResult findCourseByType(String typeName) {
         System.out.println("表现层根据typeName查询课程" + typeName);
         List<Course> list = courseServise.findCourseByType(typeName);
-        return success("成功", list);
+
+            return success("成功", list);
 
     }
 
@@ -238,4 +240,76 @@ public class CourseController {
             }
         }
     }
+
+
+    /**
+     * 获得分页对象
+     * @param pageNum
+     * @param pageSize
+     * @return AjaxResult
+     */
+    @GetMapping("/coursePageHelper")
+    @ResponseBody
+    public AjaxResult coursePageHelper(int pageNum, int pageSize) {
+        System.out.println("表现层根据课程分页" );
+//        指定当前第几页
+        PageHelper.startPage(pageNum,pageSize);
+//        获得当前分页对象
+        PageInfo<Course> pageInfo=new PageInfo<Course>(courseServise.findAllCourse());
+        return success("成功", pageInfo);
+
+    }
+    @PostMapping("/findTopCourse")
+    @ResponseBody
+    public AjaxResult findTopCourse(int topNumber) {
+        System.out.println("表现层查询前"+topNumber+"的课程信息");
+        List<Course> list = courseServise.findTopCourse(topNumber);
+        System.out.println(list);
+        return success("成功", list);
+
+    }
+    @GetMapping("/upCourseHits")
+    @ResponseBody
+    public AjaxResult upCourseHits(long id) {
+        System.out.println("表现层增加课程点击量" );
+
+
+        int insertReply = courseServise.upCourseHits(id);
+        if (insertReply == 1) {
+            return success("成功", insertReply);
+        } else if (insertReply == 0) {
+            return warn("警告，影响行数为0,可能未修改", insertReply);
+        } else {
+            return warn("警告，影响行数不为0和1,可能多修改了几行", insertReply);
+        }
+
+    }
+
+    @PostMapping("/fetchCourseByUidAndCid")
+    @ResponseBody
+    public AjaxResult fetchCourseByUidAndCid(int userId,int courseId) {
+        System.out.println("表现层根据courseId查询课程信息" + courseId);
+        System.out.println(userId);
+        System.out.println(courseId);
+        Course course = courseServise.findCourseById(courseId);
+        String replyCourse =courseServise.fetchCourseByUidAndCid(userId,courseId);
+        System.out.println(replyCourse);
+        if (replyCourse!=null){
+            course.setBuyFlag(1);
+            System.out.println("表现层执行查询fetchCourseByUidAndCid");
+        }
+        return success("成功", course);
+
+    }
+
+    @PostMapping("/findCourseByTypeAndDelivery")
+    @ResponseBody
+    public AjaxResult findCourseByTypeAndDelivery(String typeName) {
+        System.out.println("表现层根据typeName查询课程" + typeName);
+        List<Course> list = courseServise.findCourseByTypeAndDelivery(typeName);
+
+        return success("成功", list);
+
+    }
+
 }

@@ -28,6 +28,7 @@ private IAdminService adminService;
 
         System.out.println("表现层登录" + admin.getUsername()+admin.getPassword());
         String reply  = adminService.login(admin.getUsername(),admin.getPassword());
+
         if (reply!=null){
             System.out.println(reply+"success");
 
@@ -35,7 +36,7 @@ private IAdminService adminService;
         }
        else {
             System.out.println(reply+"error");
-           return warn("警告，没有这个用户", reply);
+           return warn("警告，账号密码错误", reply);
         }
 
     }
@@ -115,11 +116,14 @@ private IAdminService adminService;
     }
     @PostMapping("/logout")
     @ResponseBody
-    public AjaxResult logout(String token) {
-        System.out.println("表现层更改Admin信息");
+    public AjaxResult logout(@RequestHeader("X-Token")String token) {
+        System.out.println("表现层登出");
+        System.out.println(token);
 
         int logoutReply = adminService.logout(token);
+        System.out.println(logoutReply);
         if (logoutReply == 1) {
+            System.out.println(success("成功", "success"));
             return success("成功", "success");
         } else if (logoutReply == 0) {
             return warn("警告，登出错误", "error");

@@ -21,9 +21,17 @@ public class AdminServiceImpl implements IAdminService {
     public String login(String username,String password) {
         System.out.println("业务层Login");
         System.out.println(username);
-        Integer replyAdminId =iAdminDao.login(username);
+        Integer replyAdminId =iAdminDao.login(username,password);
         if (replyAdminId!=null){
+      //      后期要改为JWT生成token！！！！！！！！！
+      //      后期要改为JWT生成token！！！！！！！！！
+      //      后期要改为JWT生成token！！！！！！！！！
+            ;
+          if ( iAdminDao.addToken(username,Math.random()+"")!=1){
+              return null;
+          }
             Admin admin= iAdminDao.findAdminById(username);
+
             return admin.getToken();
         }
         return null;
@@ -66,11 +74,16 @@ public class AdminServiceImpl implements IAdminService {
     public int addAdmin(Admin admin) {
         System.out.println("业务层增加管理员");
 
-        return iAdminDao.addCourse(admin);
+        return iAdminDao.addAdmin(admin);
     }
 
     @Override
     public int logout(String token) {
         return iAdminDao.logout(token);
+    }
+
+    @Override
+    public int addToken(String username,String token) {
+        return iAdminDao.addToken(username, token);
     }
 }

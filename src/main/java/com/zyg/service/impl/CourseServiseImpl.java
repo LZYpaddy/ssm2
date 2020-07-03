@@ -33,7 +33,7 @@ public class CourseServiseImpl implements ICourseServise {
 
     @Override
     public Course findCourseById(long id) {
-        System.out.println("业务层查询所有课程");
+        System.out.println("业务层根据id查课程");
 
         return iCourseDao.findCourseById(id);
     }
@@ -64,6 +64,33 @@ public class CourseServiseImpl implements ICourseServise {
         System.out.println("业务层增加课程");
 
         return iCourseDao.addCourse(course);
+    }
+
+    @Override
+    public List<Course> findTopCourse(int topNumber) {
+        System.out.println("业务层查询前"+topNumber+"的课程信息");
+
+        return iCourseDao.findTopCourse(topNumber);
+    }
+
+    @Override
+    public int upCourseHits(long id) {
+        return iCourseDao.upCourseHits(id);
+    }
+
+    @Override
+    public String fetchCourseByUidAndCid(int userId, int courseId) {
+        System.out.println("fetchCourseByUidAndCid-------impl");
+        System.out.println(userId);
+        System.out.println(courseId);
+        return iCourseDao.fetchCourseByUidAndCid(userId,courseId);
+    }
+
+    @Override
+    public List<Course> findCourseByTypeAndDelivery(String typeName) {
+        System.out.println("业务层根据课程类型查询课程");
+
+        return iCourseDao.findCourseByTypeAndDelivery(typeName);
     }
 
 

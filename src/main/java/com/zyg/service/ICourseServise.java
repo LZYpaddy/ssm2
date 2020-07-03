@@ -59,5 +59,25 @@ public interface ICourseServise {
      */
     public int addCourse(Course course);
 
+    /**
+     * 查询热门前number课程
+     *
+     * @return
+     */
+    public List<Course> findTopCourse(int topNumber);
 
+    /**
+     * 增加课程点击量
+     * @return
+     */
+    public  int upCourseHits(long id);
+
+   public String fetchCourseByUidAndCid(int userId, int courseId);
+
+    /**
+     * 根据类型查已经发布的课程（前台）
+     * @param typeName
+     * @return
+     */
+    public  List<Course> findCourseByTypeAndDelivery(String typeName);
 }

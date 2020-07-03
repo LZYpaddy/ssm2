@@ -1,5 +1,6 @@
 package com.zyg.service;
 
+import com.zyg.domain.Course;
 import com.zyg.domain.Order;
 
 import java.util.List;
@@ -42,4 +43,17 @@ public interface IOrderService {
      * @return
      */
     public int addOrder(Order order);
+    /**
+     * 增加订单
+     *
+     * @return
+     */
+    public int addOrderItem(int courseId,int orderId);
+
+    /**
+     * 查询本账户所有订单
+     *
+     * @return
+     */
+    List<Course> findUserCourses(int userId);
 }

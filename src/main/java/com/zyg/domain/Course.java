@@ -24,6 +24,8 @@ public class Course {
     private String updateUser;
     private int deliveryStatus;
     private String videoAddress;
+    private int hits;
+    private int buyFlag;
 
     @Override
     public String toString() {
@@ -43,7 +45,25 @@ public class Course {
                 ", updateUser='" + updateUser + '\'' +
                 ", deliveryStatus=" + deliveryStatus +
                 ", videoAddress='" + videoAddress + '\'' +
+                ", hits=" + hits +
+                ", buyFlag=" + buyFlag +
                 '}';
+    }
+
+    public int getBuyFlag() {
+        return buyFlag;
+    }
+
+    public void setBuyFlag(int buyFlag) {
+        this.buyFlag = buyFlag;
+    }
+
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
     }
 
     public String getVideoAddress() {

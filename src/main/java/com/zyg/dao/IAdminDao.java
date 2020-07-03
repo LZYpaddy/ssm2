@@ -13,8 +13,8 @@ import java.util.List;
  */
 @Repository
 public interface IAdminDao {
-    @Select("select admin_id from admin where username=#{username}")
-    public int login(@Param("username")String username);
+    @Select("select admin_id from admin where username=#{username} and password=#{password} ")
+    public Integer login(@Param("username")String username,@Param("password")String password);
 
     @Select("select * from admin where token=#{token}")
     Admin info(@Param("token")String token);
@@ -40,13 +40,26 @@ public interface IAdminDao {
     @Delete("delete from admin where username = #{username}")
     int deleteAdmin(String username);
 
+
     /**
      * 增加管理员
+     * @param admin
      * @return
      */
     @Insert("INSERT INTO admin (username,password,avatar,token,roles) VALUES (#{username},#{password},#{avatar},#{token},'admin')")
-    int addCourse(Admin admin);
+    int addAdmin(Admin admin);
 
-    @Update("UPDATE admin SET token='' where token=#{token}")
-    int logout(String token);
+    /**
+     * @param token
+     * @return
+     */
+    @Update("UPDATE admin SET token=null where token=#{token}")
+    int logout(@Param("token")String token);
+
+    /**
+     * @param username
+     * @return
+     */
+    @Update("UPDATE admin SET token=#{token} where username=#{username}")
+    int addToken(@Param("username")String username,@Param("token")String token);
 }

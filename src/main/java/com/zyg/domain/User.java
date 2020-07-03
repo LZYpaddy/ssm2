@@ -9,9 +9,29 @@ public class User {
     private int id;
     private String username;
     private String password;
+    private double balance;
     private String nickName;
+    private String avatar;
     private String email;
     private String telephone;
+    private String token;
+    private String roles;
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public int getId() {
         return id;
@@ -61,15 +81,35 @@ public class User {
         this.telephone = telephone;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", balance=" + balance +
                 ", nickName='" + nickName + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +
+                ", token='" + token + '\'' +
+                ", roles='" + roles + '\'' +
                 '}';
     }
 }

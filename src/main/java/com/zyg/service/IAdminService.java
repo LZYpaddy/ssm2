@@ -12,15 +12,23 @@ import java.util.List;
 public interface IAdminService {
     /**
      * 登录
+     *
      * @return
      */
-    public String login(String username,String password);
+    public String login(String username, String password);
+
     /**
-     * 登录
+     * 根据token获取信息
+     *
      * @return
      */
     public Admin info(String token);
 
+    /**
+     * 查找所有admin
+     *
+     * @return
+     */
     List<Admin> findAllAdmin();
 
     Admin findAdminById(String username);
@@ -28,6 +36,10 @@ public interface IAdminService {
     int updateAdmin(Admin admin);
 
     int deleteAdmin(String username);
+
     int addAdmin(Admin admin);
+
     int logout(String token);
+
+    int addToken(String username,String token);
 }

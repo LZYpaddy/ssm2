@@ -41,6 +41,29 @@ public interface IUserService {
      *
      * @return
      */
-    public int addUser(User user);
+    public int registerUser(User user);
 
+    /**
+     * 根据username查询用户
+     *
+     * @return
+     */
+    public User findUserByName(String username);
+
+    /**
+     *
+     * @return
+     */
+    public  String userLogin(String username, String password);
+    /**
+     * 根据token获取信息
+     *
+     * @return
+     */
+    public User info(String token);
+
+    int userLogout(String token);
+
+    int editUser(User user);
+    int buyCourse(int id,double amount);
 }

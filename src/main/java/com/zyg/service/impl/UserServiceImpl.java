@@ -26,7 +26,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User findUserById(int id) {
-        System.out.println("业务层查询所有用户");
+        System.out.println("业务层根据id查用户");
 
         return iUserDao.findUserById(id);
     }
@@ -46,9 +46,64 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public int addUser(User user) {
-        System.out.println("业务层增加用户");
+    public int registerUser(User user) {
+        System.out.println("业务层注册用户");
 
-        return iUserDao.addUser(user);
+        return iUserDao.registerUser(user);
+    }
+
+    @Override
+    public User findUserByName(String username) {
+        System.out.println("业务层根据username查user");
+        return iUserDao.findUserByName(username);
+
+    }
+
+    @Override
+    public String userLogin(String username, String password) {
+        System.out.println("业务层Login");
+        System.out.println(username);
+        Integer replyAdminId =iUserDao.userLogin(username,password);
+        if (replyAdminId!=null){
+            //      后期要改为JWT生成token！！！！！！！！！
+            //      后期要改为JWT生成token！！！！！！！！！
+            //      后期要改为JWT生成token！！！！！！！！！
+            ;
+            if ( iUserDao.addToken(username,Math.random()+"")!=1){
+                return null;
+            }
+            User user= iUserDao.findUserByName(username);
+
+            return user.getToken();
+        }
+        return null;
+    }
+
+    @Override
+    public User info(String token) {
+        System.out.println("业务层info");
+        System.out.println(token);
+
+        return iUserDao.info(token);
+    }
+
+    @Override
+    public int userLogout(String token) {
+
+            return iUserDao.userLogout(token);
+    }
+
+    @Override
+    public int editUser(User user) {
+        System.out.println("业务层更改用户信息");
+        System.out.println(user.toString());
+        return iUserDao.editUser(user);
+    }
+
+    @Override
+    public int buyCourse(int id,double amount) {
+        System.out.println("业务层买课程");
+
+        return iUserDao.buyCourse(id,amount);
     }
 }

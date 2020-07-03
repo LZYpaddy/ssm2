@@ -15,6 +15,26 @@ public class Order {
     private Date payTime;
     private double amount;
 
+    public Order(Integer userId, Integer courseId, Date downTime, Date payTime, double amount) {
+        this.userId = userId;
+        this.courseId = courseId;
+        this.downTime = downTime;
+        this.payTime = payTime;
+        this.amount = amount;
+    }
+
+    public Order(Integer orderId, Integer userId, Integer courseId, Date downTime, Date payTime, double amount) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.courseId = courseId;
+        this.downTime = downTime;
+        this.payTime = payTime;
+        this.amount = amount;
+    }
+
+    public Order() {
+    }
+
     @Override
     public String toString() {
         return "Order{" +

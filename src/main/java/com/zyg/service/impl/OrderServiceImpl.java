@@ -1,6 +1,7 @@
 package com.zyg.service.impl;
 
 import com.zyg.dao.IOrderDao;
+import com.zyg.domain.Course;
 import com.zyg.domain.Order;
 import com.zyg.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,27 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public int addOrder(Order order) {
         System.out.println("业务层增加订单");
+        System.out.println(order.getCourseId());
+        if (iOrderDao.addOrder(order)==1){
+            int orderId=iOrderDao.findLastOrderId();
+            int courseId=order.getCourseId();
+            System.out.println("业务层增加订单项");
+            System.out.println(orderId);
+            return iOrderDao.addOrderItem(courseId,orderId);
+        }
+        return 0;
+    }
 
-        return iOrderDao.addOrder(order);
+    @Override
+    public int addOrderItem(int courseId, int orderId) {
+        System.out.println(courseId);
+        System.out.println(orderId);
+        return iOrderDao.addOrderItem(courseId,orderId);
+    }
+
+    @Override
+    public List<Course> findUserCourses(int userId) {
+        System.out.println(userId);
+        return iOrderDao.findUserCourses(userId);
     }
 }
