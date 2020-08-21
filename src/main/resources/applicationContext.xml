@@ -27,7 +27,7 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
         <property name="jdbcUrl" value="jdbc:mysql:///ssm"></property>
         <property name="user" value="root"></property>
-        <property name="password" value="1024"></property>
+        <property name="password" value="lzypaddy4131"></property>
     </bean>
     <!--配置SqlSessionFactory对象-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

@@ -24,9 +24,12 @@
     <mvc:resources location="/css/" mapping="/css/**" />
     <mvc:resources location="/images/" mapping="/images/**" />
     <mvc:resources location="/js/" mapping="/js/**" />
+<!--    // dist为vue打包的包-->
+<!--    <mvc:resources mapping="/" location="/dist/" />-->
 <!--    <mvc:resources location="../resources/uploadCourseImg" mapping="/js/**" />-->
-
-<!--    开启对springmvc注解的支持-->
+    <!-- 解除servlet对静态资源文件访问的限制 -->
+    <mvc:default-servlet-handler/>
+    <!--    开启对springmvc注解的支持-->
     <mvc:annotation-driven/>
 
 <!--    导入applicationContext.xml-->

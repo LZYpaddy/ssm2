@@ -21,22 +21,22 @@ import static com.zyg.core.AjaxResult.warn;
 @RestController
 @CrossOrigin
 public class AdminController {
-@Autowired
-private IAdminService adminService;
+    @Autowired
+    private IAdminService adminService;
+
     @PostMapping("/login")
-        public AjaxResult login(@RequestBody Admin admin) {
+    public AjaxResult login(@RequestBody Admin admin) {
 
-        System.out.println("表现层登录" + admin.getUsername()+admin.getPassword());
-        String reply  = adminService.login(admin.getUsername(),admin.getPassword());
+        System.out.println("表现层登录" + admin.getUsername() + admin.getPassword());
+        String reply = adminService.login(admin.getUsername(), admin.getPassword());
 
-        if (reply!=null){
-            System.out.println(reply+"success");
+        if (reply != null) {
+            System.out.println(reply + "success");
 
             return success("成功", reply);
-        }
-       else {
-            System.out.println(reply+"error");
-           return warn("警告，账号密码错误", reply);
+        } else {
+            System.out.println(reply + "error");
+            return warn("警告，账号密码错误", reply);
         }
 
     }
@@ -58,7 +58,6 @@ private IAdminService adminService;
         return success("成功", list);
 
     }
-
 
 
     @PostMapping("/findAdminById")
@@ -105,18 +104,22 @@ private IAdminService adminService;
     public AjaxResult addAdmin(@RequestBody Admin admin) {
         System.out.println("表现层增加Admin信息");
         System.out.println(admin.toString());
-        int insertReply = adminService.addAdmin(admin);
-        if (insertReply == 1) {
-            return success("成功", insertReply);
-        } else if (insertReply == 0) {
-            return warn("警告，影响行数为0,可能未修改", insertReply);
-        } else {
-            return warn("警告，影响行数不为0和1,可能多修改了几行", insertReply);
+        if (adminService.findAdminById(admin.getUsername()) != null) {
+          return warn("抱歉，该用户名已存在，请重新修改用户名", "404");
+        }else {
+            int insertReply = adminService.addAdmin(admin);
+            if (insertReply == 1) {
+                return success("增加成功", insertReply);
+            } else {
+                return warn("增加失败", insertReply);
+            }
         }
+
     }
+
     @PostMapping("/logout")
     @ResponseBody
-    public AjaxResult logout(@RequestHeader("X-Token")String token) {
+    public AjaxResult logout(@RequestHeader("X-Token") String token) {
         System.out.println("表现层登出");
         System.out.println(token);
 

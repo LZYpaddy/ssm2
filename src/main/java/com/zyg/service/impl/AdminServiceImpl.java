@@ -1,8 +1,10 @@
 package com.zyg.service.impl;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.zyg.dao.IAdminDao;
 import com.zyg.domain.Admin;
 import com.zyg.service.IAdminService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +19,21 @@ import java.util.List;
 public class AdminServiceImpl implements IAdminService {
     @Autowired
     private IAdminDao iAdminDao;
+
     @Override
-    public String login(String username,String password) {
+    public String login(String username, String password) {
         System.out.println("业务层Login");
         System.out.println(username);
-        Integer replyAdminId =iAdminDao.login(username,password);
-        if (replyAdminId!=null){
-      //      后期要改为JWT生成token！！！！！！！！！
-      //      后期要改为JWT生成token！！！！！！！！！
-      //      后期要改为JWT生成token！！！！！！！！！
+        Integer replyAdminId = iAdminDao.login(username, password);
+        if (replyAdminId != null) {
+            //      后期要改为JWT生成token！！！！！！！！！
+            //      后期要改为JWT生成token！！！！！！！！！
+            //      后期要改为JWT生成token！！！！！！！！！
             ;
-          if ( iAdminDao.addToken(username,Math.random()+"")!=1){
-              return null;
-          }
-            Admin admin= iAdminDao.findAdminById(username);
+            if (iAdminDao.addToken(username, Math.random() + "") != 1) {
+                return null;
+            }
+            Admin admin = iAdminDao.findAdminById(username);
 
             return admin.getToken();
         }
@@ -74,7 +77,9 @@ public class AdminServiceImpl implements IAdminService {
     public int addAdmin(Admin admin) {
         System.out.println("业务层增加管理员");
 
-        return iAdminDao.addAdmin(admin);
+            return iAdminDao.addAdmin(admin);
+
+
     }
 
     @Override
@@ -83,7 +88,7 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
-    public int addToken(String username,String token) {
+    public int addToken(String username, String token) {
         return iAdminDao.addToken(username, token);
     }
 }

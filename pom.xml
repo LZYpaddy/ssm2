@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zyg</groupId>
-    <artifactId>ssm</artifactId>
+    <artifactId>ssm2</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -182,7 +182,7 @@
     </dependencies>
 
     <build>
-        <finalName>ssm</finalName>
+        <finalName>ssm2</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>
